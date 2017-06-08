@@ -10,8 +10,8 @@ IPAddress DNS(192, 168, 11, 1);
 int port = 81;
 
 //ssid, pass
-const char* ssid = "KawalabStudy-g";
-const char* password = "kawalab0621";
+const char* ssid = "your-ssid";
+const char* password = "your-password";
 
 
 WebSocketsServer webSocket = WebSocketsServer(port);

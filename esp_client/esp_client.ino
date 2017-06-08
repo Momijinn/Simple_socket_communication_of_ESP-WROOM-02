@@ -8,8 +8,8 @@ const char* Server_ip("192.168.11.5");
 int port = 81;
 
 //ssid, pass
-const char* ssid = "KawalabStudy-g";
-const char* password = "kawalab0621";
+const char* ssid = "your-ssid";
+const char* password = "your-password";
 
 WebSocketsClient webSocket;
 
@@ -34,7 +34,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
             // send data to back to Server
             //webSocket.sendTXT(payload, lenght);
             break;
-        
+
         case WStype_BIN:
             Serial.printf("[WSc] get binary lenght: %u\n", lenght);
             hexdump(payload, lenght);
@@ -58,7 +58,7 @@ void setup() {
     Serial.begin(115200);
     delay(100);
     Serial.print("\n\nStart\n");
-    
+
     WiFi.begin(ssid, password);
     while(WiFi.status() != WL_CONNECTED) {
         Serial.print('.');
