@@ -20,7 +20,7 @@ ESP-WROOM-02(ESP8266)におけるソケット通信のサンプルスケッチ
 
     password　・・・　ルーターのパスワード
 
-<?c++
+```Arduino
 //IP
 const char* Server_ip("192.168.11.5"); //server_ip
 int port = 81; //server_port
@@ -28,7 +28,7 @@ int port = 81; //server_port
 //ssid, pass
 const char* ssid = "your-ssid";
 const char* password = "your-password";
-?>
+```
 
 
 ### esp_server
@@ -46,7 +46,7 @@ const char* password = "your-password";
 
     password　・・・　ルーターのパスワード
 
-<?c++
+```Arduino
 //Fit to Router
 IPAddress ip(192, 168, 11, 5);
 IPAddress gateway(192,168, 11, 1);
@@ -57,7 +57,7 @@ int port = 81;
 //ssid, pass
 const char* ssid = "your-ssid";
 const char* password = "your-password";
-?>
+```
 
 
 ## 実行結果
