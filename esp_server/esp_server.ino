@@ -1,12 +1,13 @@
 //https://github.com/Links2004/arduinoWebSockets/issues/33
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
+//myip 28
 
 //IP
-IPAddress ip(192, 168, 11, 5);
-IPAddress gateway(192,168, 11, 1);
+IPAddress ip(192, 168, 42, 28);
+IPAddress gateway(192,168, 42, 1);
 IPAddress subnet(255, 255, 255, 0);
-IPAddress DNS(192, 168, 11, 1);
+IPAddress DNS(192, 168, 42, 1);
 int port = 81;
 
 //ssid, pass

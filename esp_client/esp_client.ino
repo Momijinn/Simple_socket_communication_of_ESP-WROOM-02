@@ -2,9 +2,11 @@
 //https://github.com/Links2004/arduinoWebSockets/issues/33
 #include <ESP8266WiFi.h>
 #include <WebSocketsClient.h> //https://github.com/Links2004/arduinoWebSockets
+#include <Ticker.h>
+//myip 27
 
 //IP
-const char* Server_ip("192.168.11.5");
+const char* Server_ip("192.168.42.28");
 int port = 81;
 
 //ssid, pass
@@ -13,9 +15,17 @@ const char* password = "your-password";
 
 WebSocketsClient webSocket;
 
+//Initialize timer
+Ticker ticker;
+
+//Timer callback
+void doBlockingIO() {
+  Serial.println("Send: Hello");
+  webSocket.sendTXT("hello"); //send
+}
+
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
-
 
     switch(type) {
         case WStype_DISCONNECTED:
@@ -72,19 +82,15 @@ void setup() {
     webSocket.begin(Server_ip, port);
     webSocket.onEvent(webSocketEvent);
     Serial.println("Client started\n");
+
+    //set timer
+    ticker.attach(2, doBlockingIO); //3sec
+
+    //set msec
+    // ticker.attach_ms(60000, doBlockingIO);
 }
 
 
-
 void loop() {
-    static unsigned long last = 0;
     webSocket.loop();
-
-    if(abs(millis() - last) > 1000) {
-        Serial.println("Send: Hello");
-        webSocket.sendTXT("hello"); //send
-        last = millis();
-    }
-
-
 }
