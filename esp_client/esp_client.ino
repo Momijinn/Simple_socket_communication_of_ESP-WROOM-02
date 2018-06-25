@@ -86,7 +86,7 @@ void setup() {
     Serial.printf("Connected, IP address: ");
     Serial.println(WiFi.localIP());
 
-    //serverip
+    //server ip
     webSocket.begin(ServerIp, ServerPort);
     webSocket.onEvent(webSocketEvent);
     Serial.println("Client started\n");

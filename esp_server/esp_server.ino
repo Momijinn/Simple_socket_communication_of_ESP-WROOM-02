@@ -1,4 +1,3 @@
-//https://github.com/Links2004/arduinoWebSockets/issues/33
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
 
@@ -60,7 +59,6 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
 
 void setup() {
     Serial.begin(115200);
-    delay(100);
     Serial.print("\n\nStart\n");
 
     WiFi.config(ip, gateway, subnet, DNS); //static ip
