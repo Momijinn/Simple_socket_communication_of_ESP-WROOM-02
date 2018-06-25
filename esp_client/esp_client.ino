@@ -1,27 +1,33 @@
-
-//https://github.com/Links2004/arduinoWebSockets/issues/33
 #include <ESP8266WiFi.h>
 #include <WebSocketsClient.h> //https://github.com/Links2004/arduinoWebSockets
 #include <Ticker.h>
-//myip 27
 
-//IP
-const char* Server_ip("192.168.42.28");
-int port = 81;
 
-//ssid, pass
-const char* ssid = "your-ssid";
-const char* password = "your-password";
+//ServerIP
+const char* ServerIp("192.168.0.5");
+int ServerPort = 8000;
+
+//Ssid, pass
+const char* Ssid = "your Wi-fi SSID";
+const char* Password = "your Wi-fi PASSWORD";
+
 
 WebSocketsClient webSocket;
 
 //Initialize timer
 Ticker ticker;
 
+//Connected Flag
+bool ConnectFlag = false;
+
 //Timer callback
 void doBlockingIO() {
-  Serial.println("Send: Hello");
-  webSocket.sendTXT("hello"); //send
+
+    if(ConnectFlag){
+        Serial.println("Send: Hello");
+        webSocket.sendTXT("hello"); //Send Message
+    }
+
 }
 
 
@@ -30,11 +36,13 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
     switch(type) {
         case WStype_DISCONNECTED:
             Serial.printf("[WSc] Disconnected!\n");
+            ConnectFlag = false;
             break;
 
         case WStype_CONNECTED:
             {
                 Serial.printf("[WSc] Connected to url: %s\n",  payload);
+                ConnectFlag = true;
             }
             break;
 
@@ -66,26 +74,25 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 
 void setup() {
     Serial.begin(115200);
-    delay(100);
     Serial.print("\n\nStart\n");
 
-    WiFi.begin(ssid, password);
+    WiFi.begin(Ssid, Password);
     while(WiFi.status() != WL_CONNECTED) {
         Serial.print('.');
         delay(500);
         }
+
     Serial.println();
     Serial.printf("Connected, IP address: ");
     Serial.println(WiFi.localIP());
 
     //serverip
-    webSocket.begin(Server_ip, port);
+    webSocket.begin(ServerIp, ServerPort);
     webSocket.onEvent(webSocketEvent);
     Serial.println("Client started\n");
 
     //set timer
-    ticker.attach(2, doBlockingIO); //3sec
-
+    ticker.attach(2, doBlockingIO); //2sec
     //set msec
     // ticker.attach_ms(60000, doBlockingIO);
 }

@@ -1,24 +1,25 @@
 //https://github.com/Links2004/arduinoWebSockets/issues/33
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
-//myip 28
 
 //IP
-IPAddress ip(192, 168, 42, 28);
-IPAddress gateway(192,168, 42, 1);
+IPAddress ip(192, 168, 0, 5);
+IPAddress gateway(192,168, 0, 1);
 IPAddress subnet(255, 255, 255, 0);
-IPAddress DNS(192, 168, 42, 1);
-int port = 81;
+IPAddress DNS(192, 168, 0, 1);
+int port = 8000;
 
-//ssid, pass
-const char* ssid = "your-ssid";
-const char* password = "your-password";
+//SSID, pass
+const char* Ssid = "your Wi-fi SSID";
+const char* Password = "your Wi-fi Password";
+
 
 
 WebSocketsServer webSocket = WebSocketsServer(port);
 
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+    const char * SendMessage = "Server-Message";
 
     switch(type) {
         case WStype_DISCONNECTED:
@@ -36,7 +37,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
             Serial.printf("[%u] get Text: %s\n", num, payload);
 
             // echo data back to browser
-            webSocket.sendTXT(num, "ok", length);
+            webSocket.sendTXT(num, SendMessage, strlen(SendMessage));
             // send data to all connected clients 全てのクライアントへ送信
             //webSocket.broadcastTXT(payload, length);
             break;
@@ -65,7 +66,7 @@ void setup() {
     WiFi.config(ip, gateway, subnet, DNS); //static ip
     delay(100);
 
-    WiFi.begin(ssid, password);
+    WiFi.begin(Ssid, Password);
     while(WiFi.status() != WL_CONNECTED) {
         Serial.print('.');
         delay(500);
